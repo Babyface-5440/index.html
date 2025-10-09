@@ -1,1 +1,370 @@
-# Babyface4real
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Al-Amannah International Academy</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  :root {
+    --primary: #002b80;
+    --secondary: #001f5c;
+    --bg: #f5f7fb;
+    --text: #222;
+    --card-bg: #fff;
+  }
+  body.dark {
+    --primary: #87a5ff;
+    --secondary: #5b7cff;
+    --bg: #0b1120;
+    --text: #f3f3f3;
+    --card-bg: #1c2540;
+  }
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    position: relative;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* Watermark logo */
+  body::before {
+    content: "";
+    background: url('Al-Amannah-logo.png') center center no-repeat;
+    background-size: 250px;
+    opacity: 0.05;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  header {
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+  }
+  .brand img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .brand small {
+    font-size: 0.8rem;
+    color: #cfd8ff;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.3s;
+  }
+  nav a:hover {
+    opacity: 0.8;
+  }
+  nav i {
+    margin-right: 6px;
+  }
+
+  /* Toggle button */
+  .theme-toggle {
+    background: white;
+    border: none;
+    color: var(--primary);
+    font-size: 1.2rem;
+    border-radius: 50%;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .theme-toggle:hover {
+    background: #e3e3e3;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+  }
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .hero img.active {
+    opacity: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+  .hero-content h1 {
+    font-size: 2.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+
+  section {
+    padding: 3rem 1.5rem;
+    max-width: 1000px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .gallery img {
+    width: 32%;
+    margin: 1%;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  .pay-button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .pay-button:hover {
+    background-color: var(--secondary);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .modal-content {
+    background: var(--card-bg);
+    color: var(--text);
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+  }
+  form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+  form input, form textarea {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--text);
+  }
+  form button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  form button:hover {
+    background-color: var(--secondary);
+  }
+
+  footer {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      text-align: center;
+    }
+    nav {
+      margin-top: 0.5rem;
+    }
+    .gallery img {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="Al-Amannah-logo.png" alt="School Logo">
+    <div>
+      <h1>Al-Amannah International Academy</h1>
+      <small>Knowledge • Discipline • Integrity</small>
+    </div>
+  </div>
+  <nav>
+    <a href="#home"><i class="fas fa-home"></i>Home</a>
+    <a href="#about"><i class="fas fa-info-circle"></i>About</a>
+    <a href="#gallery"><i class="fas fa-images"></i>Gallery</a>
+    <a href="admission.html"><i class="fas fa-user-graduate"></i>Admission</a>
+    <a href="#payment"><i class="fas fa-credit-card"></i>Payment</a>
+    <a href="#contact"><i class="fas fa-envelope"></i>Contact</a>
+    <a href="result.html" target="_blank"><i class="fas fa-file-alt"></i>Check Result</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode">
+    <i class="fas fa-moon"></i>
+  </button>
+</header>
+
+<section id="home" class="hero">
+  <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1500&q=60" class="active">
+  <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1500&q=60">
+  <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1500&q=60">
+  <div class="hero-content">
+    <p>Welcome to</p>
+    <h1>Al-Amannah International Academy</h1>
+    <p>Knowledge • Discipline • Integrity</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>Located in Ilorin, Kwara State, Al-Amannah International Academy is committed to nurturing disciplined, intelligent, and morally upright students who will excel globally.</p>
+</section>
+
+<section id="gallery" class="gallery">
+  <h2>Our Gallery</h2>
+  <div>
+    <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=400&q=60">
+    <img src="https://images.unsplash.com/photo-1588075592446-231c13a3e1e1?auto=format&fit=crop&w=400&q=60">
+    <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=400&q=60">
+  </div>
+</section>
+
+<section id="payment">
+  <h2>Pay School Fees</h2>
+  <p>Make payments safely and easily to our school account.</p>
+  <button class="pay-button" onclick="openModal()">Pay Fees</button>
+</section>
+
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <h3>Payment Information</h3>
+    <p><strong>Account Name:</strong> Soliu Abdulrasheed Taiye</p>
+    <p><strong>Account Number:</strong> 8146915440</p>
+    <p><strong>Bank Name:</strong> Opay Private Bank</p>
+    <p>Please confirm payment with the school bursar after transfer.</p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form action="mailto:alaselataiye@gmail.com" method="post" enctype="text/plain">
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <label>Message</label>
+    <textarea name="message" rows="4" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2025 Al-Amannah International Academy — Ilorin, Kwara State</p>
+</footer>
+
+<script>
+function openModal() {
+  document.getElementById("paymentModal").style.display = "block";
+}
+function closeModal() {
+  document.getElementById("paymentModal").style.display = "none";
+}
+
+// Slideshow
+let slides = document.querySelectorAll(".hero img");
+let current = 0;
+setInterval(() => {
+  slides[current].classList.remove("active");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("active");
+}, 4000);
+
+// Dark Mode Toggle
+const toggle = document.getElementById('themeToggle');
+const body = document.body;
+toggle.addEventListener('click', () => {
+  body.classList.toggle('dark');
+  const icon = toggle.querySelector('i');
+  if (body.classList.contains('dark')) {
+    icon.classList.replace('fa-moon', 'fa-sun');
+  } else {
+    icon.classList.replace('fa-sun', 'fa-moon');
+  }
+});
+</script>
+</body>
+</html>
