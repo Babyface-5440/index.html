@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Al-Amannah International Academy | Result Checker</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f5f8ff;
+    color: #222;
+  }
+  header {
+    background-color: #002b80;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+  }
+  header img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  p {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+  section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+  }
+  h2 { color: #002b80; }
+  input {
+    width: 100%;
+    padding: 0.6rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    background-color: #002b80;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover { background-color: #001f5c; }
+
+  .result-page {
+    display: none;
+  }
+  .result-slip {
+    background: white url('Al-Amannah-logo.png') center/250px no-repeat;
+    background-blend-mode: lighten;
+    opacity: 0.97;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  table, th, td { border: 1px solid #999; }
+  th, td { padding: 0.6rem; text-align: left; }
+  th { background-color: #002b80; color: white; }
+  .signature {
+    margin-top: 3rem;
+    text-align: right;
+  }
+  .signature hr {
+    width: 200px;
+    border: 1px solid #000;
+  }
+  footer {
+    text-align: center;
+    background-color: #002b80;
+    color: white;
+    padding: 1rem;
+    margin-top: 3rem;
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <img src="Al-Amannah-logo.png" alt="School Logo">
+  <div>
+    <h1>Al-Amannah International Academy</h1>
+    <p>Knowledge • Discipline • Integrity</p>
+  </div>
+</header>
+
+<section>
+  <h2>Student Result Checker</h2>
+  <div class="result-login" id="loginBox">
+    <label>Admission Number:</label>
+    <input type="text" id="admno" placeholder="e.g., AIA001">
+    <label>Password:</label>
+    <input type="password" id="pwd" placeholder="Enter password">
+    <button onclick="checkResult()">Check Result</button>
+  </div>
+
+  <div class="result-page" id="resultPage">
+    <div class="result-slip">
+      <h2 style="text-align:center;">Al-Amannah International Academy</h2>
+      <p style="text-align:center;"><em>Knowledge • Discipline • Integrity</em></p>
+      <h3 id="studentName"></h3>
+      <table id="resultTable">
+        <thead><tr><th>Subject</th><th>Score</th><th>Grade</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="signature">
+        <hr>
+        <p>Principal’s Signature</p>
+      </div>
+      <button onclick="window.print()">Print Result</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Al-Amannah International Academy — Ilorin, Kwara State</p>
+</footer>
+
+<script>
+const results = {
+  "AIA001": {
+    name: "Abdul Rasheed A.",
+    password: "12345",
+    results: [
+      {subject: "Mathematics", score: 89, grade: "A"},
+      {subject: "English", score: 83, grade: "A"},
+      {subject: "Civic Education", score: 77, grade: "B+"},
+      {subject: "Basic Science", score: 90, grade: "A"},
+      {subject: "Computer Studies", score: 85, grade: "A"}
+    ]
+  }
+};
+
+function checkResult() {
+  const adm = document.getElementById('admno').value.trim();
+  const pwd = document.getElementById('pwd').value.trim();
+  const student = results[adm];
+  if (student && student.password === pwd) {
+    document.getElementById('loginBox').style.display = 'none';
+    const page = document.getElementById('resultPage');
+    page.style.display = 'block';
+    document.getElementById('studentName').textContent = "Name: " + student.name + " (" + adm + ")";
+    const tbody = document.querySelector('#resultTable tbody');
+    tbody.innerHTML = "";
+    student.results.forEach(r => {
+      tbody.innerHTML += `<tr><td>${r.subject}</td><td>${r.score}</td><td>${r.grade}</td></tr>`;
+    });
+  } else {
+    alert("Invalid Admission Number or Password!");
+  }
+}
+</script>
+</body>
+</html>
